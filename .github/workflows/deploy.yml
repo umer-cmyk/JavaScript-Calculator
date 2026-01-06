@@ -32,7 +32,12 @@ jobs:
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
             cd /root/
-            git clone https://github.com/umer-cmyk/JavaScript-Calculator.git
-            cd JavaScript-Calculator
+            if [ -d "JavaScript-Calculator" ]; then
+              cd JavaScript-Calculator
+              git pull
+            else
+              git clone https://github.com/umer-cmyk/JavaScript-Calculator.git
+              cd JavaScript-Calculator
+            fi
             npm install
             pm2 start calculator.js --name calculator
