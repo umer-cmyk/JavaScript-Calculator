@@ -35,4 +35,4 @@ jobs:
             git clone https://github.com/umer-cmyk/JavaScript-Calculator.git
             cd JavaScript-Calculator
             npm install
-            pm2 restart calculator || pm2 start calculator.js --name calculator
+            pm2 start calculator.js --name calculator
