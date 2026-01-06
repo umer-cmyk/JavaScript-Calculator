@@ -40,4 +40,4 @@ jobs:
               cd JavaScript-Calculator
             fi
             npm install
-            pm2 start calculator.js --name calculator
+            pm2 restart calculator --update-env || pm2 start calculator.js --name calculator
