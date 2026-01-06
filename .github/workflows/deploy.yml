@@ -1,0 +1,43 @@
+name: Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+      
+      - name: Install dependencies
+        run: npm install
+      
+      - name: Run tests
+        run: npm test
+      
+      - name: Deploy to VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VM_HOST }}
+          username: ${{ secrets.VM_USER }}
+          key: ${{ secrets.VM_SSH_KEY }}
+          script: |
+            if [ -d "/root/JavaScript-Calculator" ]; then
+              cd /root/JavaScript-Calculator/
+              git pull origin main
+            else
+              cd /root/
+              git clone https://github.com/YOUR_USERNAME/JavaScript-Calculator.git
+              cd JavaScript-Calculator
+            fi
+            npm install
+            pm2 restart calculator || pm2 start calculator.js --name calculator
