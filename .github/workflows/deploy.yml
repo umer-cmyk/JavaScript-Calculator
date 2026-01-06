@@ -31,13 +31,8 @@ jobs:
           username: ${{ secrets.VM_USER }}
           key: ${{ secrets.VM_SSH_KEY }}
           script: |
-            if [ -d "/root/JavaScript-Calculator" ]; then
-              cd /root/JavaScript-Calculator/
-              git pull origin main
-            else
-              cd /root/
-              git clone https://github.com/YOUR_USERNAME/JavaScript-Calculator.git
-              cd JavaScript-Calculator
-            fi
+            cd /root/
+            git clone https://github.com/umer-cmyk/JavaScript-Calculator.git
+            cd JavaScript-Calculator
             npm install
             pm2 restart calculator || pm2 start calculator.js --name calculator
